@@ -1,49 +1,63 @@
 <form action="" method="post">
-                                <div class="form-group">
-                                    <label for="categoryTitle">Edit Category</label>
+      <div class="form-group">
+         <label for="cat-title">Edit Category</label>
+         
+         
+         <?php
 
-                                <?php 
-                                      if(isset($_GET['edit'])){
-                                        $edited = $_GET['edit'];
-                                      $query = "SELECT * FROM CATEGORIES WHERE category_id = {$edited}";
-                                        $select_categories= mysqli_query($connection , $query);                                
-                                        while($row = mysqli_fetch_assoc($select_categories)){
-                                        $categoryID = $row['category_id'];
-                                        $categoryTitle = $row['category_title'];
+        if(isset($_GET['edit'])){
 
-                                        ?>
-                                        <input value= "<?php if(isset($categoryTitle)) {echo $categoryTitle;} ?>" type="text" class = "form-control" name="editCategory">
-
-                                  <?php } 
-                                  
-                                  if(isset($_POST['update_category'])){
-                                    $updatedCategory = $_POST['editCategory'];
-                                    echo $updatedCategory;
-                                    if($updatedCategory == ""){
-                                            $error =  "CANNOT BE EMPTY";
-                                    }else{
-                                    $updateQuery = "UPDATE CATEGORIES SET category_title = '{$updatedCategory}' WHERE category_id = {$edited}";
-                                    $updateCategoryQuery = mysqli_query($connection , $updateQuery);
-                                    header("Location: categories.php");
-
-                                    if(!$updateCategoryQuery){
-                                        die('Query Failed ' . mysqli_error($connection));
-                                    }
-                                }
-                            }
-                        }
-                            
-
-
-                                  ?>
+            $cat_id = escape($_GET['edit']);
 
 
 
-                                  
-                                </div>
-                                <div class="form-group">
-                                    <input class="btn btn-primary" type="submit" name="update_category" value="Update Category">
-                                    <label for="error"><?php echo $error;?></label>
-                                </div>
+    
+        $query = "SELECT * FROM categories WHERE category_id = $cat_id ";
+        $select_categories_id = mysqli_query($connection,$query);  
 
-                            </form>
+            while($row = mysqli_fetch_assoc($select_categories_id)) {
+            $cat_id = $row['category_id'];
+            $cat_title = $row['category_title'];
+                
+            ?>
+            
+ <input value="<?php echo $cat_title; ?>" type="text" class="form-control" name="cat_title">
+        
+        
+        
+       <?php }} ?>
+       
+     <?php   
+
+        /////////// UPDATE QUERY
+
+            if(isset($_POST['update_category'])) {
+
+                $the_cat_title = escape($_POST['cat_title']);
+
+                $stmt = mysqli_prepare($connection, "UPDATE categories SET category_title = ? WHERE category_id = ? ");
+
+                 mysqli_stmt_bind_param($stmt, 'si', $the_cat_title, $cat_id);
+
+                 mysqli_stmt_execute($stmt);
+
+
+                 confirmQuery($stmt);
+
+                      mysqli_stmt_close($stmt);
+
+
+                     redirect("categories.php");
+          
+         }
+
+    ?>
+       
+     
+         
+      </div>
+       <div class="form-group">
+          <input class="btn btn-primary" type="submit" name="update_category" value="Update Category">
+      </div>
+
+    </form>

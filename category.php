@@ -18,8 +18,11 @@
 
 
             <?php 
-            
-            $query = "SELECT * FROM POSTS";
+            if(isset($_GET['category']));{
+            $category_id = $_GET['category'];
+            }
+
+                 $query = "SELECT * FROM POSTS WHERE post_category_id = {$category_id}";
                 $select_posts = mysqli_query($connection , $query);
                 
                 while($row = mysqli_fetch_assoc($select_posts)){
@@ -50,7 +53,7 @@
                 <img class="img-responsive" src="images/<?php echo $post_image?>" alt="">
                 <hr>
                 <p> <?php echo $post_content  ?></p>
-                <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id ;?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                 <hr>
             
