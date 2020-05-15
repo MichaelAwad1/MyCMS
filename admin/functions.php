@@ -245,7 +245,7 @@ global $connection;
 
 }
 
-function deleteComments(){
+function deleteComment(){
     global $connection;
     
         if(isset($_GET['delete'])){
@@ -273,7 +273,52 @@ function deletePost(){
     
     
     }
-    
+
+    function deleteUser(){
+        global $connection;
+        
+            if(isset($_GET['delete'])){
+            $user_id = $_GET['delete'];
+            $query = "DELETE FROM users WHERE user_id = {$user_id} ";
+            $delete_query = mysqli_query($connection,$query);
+            confirmQuery($delete_query);
+            header("Location: users.php");
+        
+        
+            }
+                    
+        
+        
+        }
+
+function toAdmin() {
+    global $connection;
+    if(isset($_GET['change_to_admin'])){
+        
+        $the_user_id = $_GET['change_to_admin'];
+        
+        $query = "UPDATE users SET user_role = 'admin' WHERE userid = $the_user_id ";
+        $to_admin_query = mysqli_query($connection, $query);
+        confirmQuery($to_admin_query);
+        header("Location: users.php");
+        
+        
+        }
+    }
+function toSubscriber() {
+    global $connection;
+    if(isset($_GET['change_to_sub'])){
+        
+        $the_user_id = $_GET['change_to_sub'];
+        
+        $query = "UPDATE users SET user_role = 'subscriber' WHERE userid = $the_user_id ";
+        $to_sub_query = mysqli_query($connection, $query);
+        confirmQuery($to_sub_query);
+        header("Location: users.php");
+        
+        }
+    }
+
 
 function approve() {
     global $connection;

@@ -22,18 +22,15 @@
                     $source = "";
                 
                 switch($source){
-                    case 'add_post':
-                        include "includes/add_post.php";
+                    case 'add_user':
+                        include "includes/add_user.php";
                         break;  
-                    case 'view_posts':
-                        include "includes/view_posts.php";
-                        break;
-
-                    case 'edit_post':
-                        include "includes/edit_post.php";
+                    
+                    case 'edit_user':
+                        include "includes/edit_user.php";
                         break;    
                     default:
-                        include "includes/view_posts.php";
+                        include "includes/view_users.php";
                         break;
                 
                   
@@ -58,10 +55,12 @@
 
  <?php 
 
-deletePost();
-
+deleteUser();
+toAdmin();
+toSubscriber();
 
  ?>
+
         
         
     <?php include "includes/admin_footer.php" ?>

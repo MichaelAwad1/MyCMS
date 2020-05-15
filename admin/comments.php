@@ -58,7 +58,7 @@
 
  <?php 
 
-deleteComments();
+deleteComment();
 unapprove();
 approve();
 
