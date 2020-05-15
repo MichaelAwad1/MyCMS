@@ -245,6 +245,18 @@ global $connection;
 
 }
 
+function deleteComments(){
+    global $connection;
+    
+        if(isset($_GET['delete'])){
+        $the_comment_id = $_GET['delete'];
+        $query = "DELETE FROM comments WHERE comment_id = {$the_comment_id} ";
+        $delete_query = mysqli_query($connection,$query);
+        header("Location: comments.php");
+        }                
+    
+    }
+
 function deletePost(){
     global $connection;
     
@@ -263,8 +275,25 @@ function deletePost(){
     }
     
 
+function approve() {
+    global $connection;
+    if(isset($_GET['approve'])){
+        
+        $the_comment_id = $_GET['approve'];
+        
+        $query = "UPDATE comments SET comment_status = 'approved' WHERE comment_id = $the_comment_id ";
+        $unapprove_comment_query = mysqli_query($connection, $query);
+        header("Location: comments.php");
+        
+        
+        }
+    
+        
+        
+    
+    }
 
-function UnApprove() {
+function unapprove() {
 global $connection;
 if(isset($_GET['unapprove'])){
     

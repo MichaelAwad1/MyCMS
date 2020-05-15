@@ -52,7 +52,7 @@
                         <a href="./categories.php"><i class="fa fa-fw fa-desktop"></i>Categories</a>
                     </li>
                     <li>
-                        <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i>Comments</a>
+                        <a href="comments.php"><i class="fa fa-fw fa-wrench"></i>Comments</a>
                     </li>
                 
                     <li>

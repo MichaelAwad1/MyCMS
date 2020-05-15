@@ -19,7 +19,7 @@
 
             <?php 
             
-            $query = "SELECT * FROM POSTS";
+            $query = "SELECT * FROM POSTS WHERE post_status = 'published'";
                 $select_posts = mysqli_query($connection , $query);
                 
                 while($row = mysqli_fetch_assoc($select_posts)){
@@ -32,7 +32,7 @@
                     $post_content = substr($row['post_content'], 0,100);
                     // $postTags = $row['post_tags'];
                     // $postCommentCount = $row['post_comment_count'];
-                    // $postStatus = $row['post_status'];
+                     $postStatus = $row['post_status'];
             
                     ?>
 
