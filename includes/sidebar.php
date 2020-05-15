@@ -23,6 +23,29 @@
     <!-- /.input-group -->
 </div>
 
+<!-- Log in Well -->
+<div class="well">
+    <h4>Login</h4>
+
+    <form action="includes/login.php" method="post">
+    <div class="form-group">
+    <label for="">Enter Username</label>
+       <input name = "username" type="text" class="form-control" placeholder="Enter Username">
+        
+    </div>
+    <div class="form-group">
+    <label for="">Enter Password</label>
+        <input name = "password" type="password" class="form-control" placeholder="Enter Password">
+       
+        
+    </div>
+    <div class="input-group-btn">
+        <button class="btn btn-primary" name="login" type="submit">Login</button>
+        </div>
+    </form> <!-- end of form -->
+
+    <!-- /.input-group -->
+</div>
 
 
 
