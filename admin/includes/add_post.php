@@ -3,8 +3,7 @@ if(isset($_POST["create_post"])){
     $post_title = $_POST["title"];
     $post_category_id = $_POST["post_category"];
     $post_author = $_POST["author"];
-    $post_status = $_POST["status"];
-    
+    $post_status = $_POST["status"]; 
     $post_image = $_FILES["image"]["name"];
     $post_image_temp = $_FILES["image"]["tmp_name"];
     
@@ -24,6 +23,9 @@ if(isset($_POST["create_post"])){
              
     $create_post_query = mysqli_query($connection, $query); 
     confirmQuery($create_post_query);
+    $post_id = mysqli_insert_id($connection);
+
+    echo "<p class='bg-success'>Post Added <a href='../post.php?p_id=$post_id'>View post</a>" . " or " . "<a href='posts.php' >View All Posts</a></p>";
 
 }
 ?>
@@ -60,7 +62,13 @@ if(isset($_POST["create_post"])){
     </div>
     <div class="form-group">
         <label for="status">Post Status</label>
-        <input type="text" class="form-control" name="status">
+        <select class="form-control" name="status" id="post_status">
+            
+            <option value="published">published</option>
+            <option value="draft">draft</option>
+            
+            </select>
+        
     </div>
     <div class="form-group">
         <label for="image">Post Image</label>
@@ -72,7 +80,7 @@ if(isset($_POST["create_post"])){
     </div>
     <div class="form-group">
         <label for="content">Post Content</label>
-        <textarea type="text" class="form-control" name="content" id="" cols="30" rows="10"></textarea>
+        <textarea type="text" class="form-control" name="content" id="body" cols="30" rows="10"></textarea>
     </div>
     <div class="form-group">
         <input class="btn btn-primary" type="submit" name="create_post" value="Publish Post">

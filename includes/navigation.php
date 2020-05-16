@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
            
@@ -27,20 +28,25 @@
                 
                      while($row = mysqli_fetch_assoc($select_categories)){
                       $categoryTitle = $row['category_title'];
-                     echo "<li><a href='#'>{$categoryTitle}</li>";
+                     echo "<li><a href='#'>{$categoryTitle}</a></li>";
                          }
                     ?>
+               
                 
+                <?php 
                 
+                if(isset($_SESSION['role'])){
+                    if(isset($_GET['p_id'])){
+                        $p_id = $_GET['p_id'];
+                      echo   "<li><a href='admin/posts.php?source=edit_post&p_id={$p_id}'>Edit</a></li>";
+                    }
+
+                }
+                
+                ?>
                 
                      
-                    <!-- <li>
-                        <a href="#">Services</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li> -->
-                
+                   
                 
                 </ul>
             </div>

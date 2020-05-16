@@ -60,6 +60,8 @@ if(isset($_POST["update_post"])){
     //echo $query;
     confirmQuery($update_post_query);
 
+    echo "<p class='bg-success'>Post Updated <a href='../post.php?p_id=$post_id'>View post</a>" . " or " . "<a href='posts.php' >Edit More Posts</a></p>";
+
 
 }
 
@@ -96,7 +98,17 @@ if(isset($_POST["update_post"])){
     </div>
     <div class="form-group">
         <label for="status">Post Status</label>
-        <input type="text" class="form-control" name="status"  value="<?php echo $post_status ;?>">
+        <select class="form-control" name="status" id="post_status">
+        <option value="<?php echo $post_status ;?>"><?php echo $post_status ;?></option>
+        <?php 
+        if($post_status =='published'){
+            echo "<option value='draft'>draft</option>";
+        }else {
+            echo "<option value='published'>published</option>";
+        }
+        ?>
+            
+            </select>
     </div>
     <div class="form-group">
         <label for="image">Post Image</label>
@@ -109,7 +121,7 @@ if(isset($_POST["update_post"])){
     </div>
     <div class="form-group">
         <label for="content">Post Content</label>
-        <textarea type="text" class="form-control" name="content" id="" cols="30" rows="10"><?php echo $post_content;?></textarea>
+        <textarea type="text" class="form-control" name="content" id="body" cols="30" rows="10"><?php echo $post_content;?></textarea>
     </div>
     <div class="form-group">
         <input class="btn btn-primary" type="submit" name="update_post" value="Update Post">

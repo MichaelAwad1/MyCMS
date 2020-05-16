@@ -52,8 +52,7 @@
                 <img class="img-responsive" src="images/<?php echo $post_image?>" alt="">
                 <hr>
                 <p> <?php echo $post_content  ?></p>
-                <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
-
+               
                 <hr>
             
             
@@ -66,23 +65,37 @@
 
                     <?php 
                     if(isset($_POST['create_comment'])){
+
                         $comment_post_id = $post_id;
                         $comment_author = $_POST['comment_author'];
                         $comment_email = $_POST['comment_email'];
                         $comment_content = $_POST['comment_content'];
                         
+                        if(!empty($comment_author) && !empty($comment_author) && !empty($comment_author) ){
+
+                            $query = "INSERT INTO COMMENTS (comment_post_id, comment_author,comment_email,
+                            comment_content, comment_status, comment_date) ";
+                           $query .= "VALUES ({$comment_post_id}, '{$comment_author}', '{$comment_email}',
+                            '{$comment_content}', 'unapproved' , now())";
+                              $create_comment_query = mysqli_query($connection, $query);
+                              confirmQuery($create_comment_query);
+                           $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 
+                                       WHERE post_id = {$comment_post_id}";
+                           $update_comment_count = mysqli_query($connection, $query);
+                           confirmQuery($update_comment_count);       
+                           }
+                           else {
+                            echo "<script>alert('Fields cannot be empty') </script>";
+
+                           }
+
+
+
+                        }
+                      
+                        
                     
-                    $query = "INSERT INTO COMMENTS (comment_post_id, comment_author,comment_email,
-                     comment_content, comment_status, comment_date) ";
-                    $query .= "VALUES ({$comment_post_id}, '{$comment_author}', '{$comment_email}',
-                     '{$comment_content}', 'unapproved' , now())";
-                       $create_comment_query = mysqli_query($connection, $query);
-                       confirmQuery($create_comment_query);
-                    $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 
-                                WHERE post_id = {$comment_post_id}";
-                    $update_comment_count = mysqli_query($connection, $query);
-                    confirmQuery($update_comment_count);       
-                    }
+                   
 
 
                     
@@ -105,7 +118,7 @@
                         </div>
                         <div class="form-group">
                         <label for="comment">Your Comment</label>
-                            <textarea class="form-control" rows="3" name="comment_content"></textarea>
+                            <textarea class="form-control" id="body" rows="3" name="comment_content"></textarea>
                         </div>
                         <button type="submit" name="create_comment" class="btn btn-primary">Submit</button>
                     </form>
