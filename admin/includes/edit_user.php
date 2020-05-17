@@ -12,18 +12,29 @@ $user_id = escape($_GET['user_id']);
                 $user_role = $row["user_role"];
                 $username = $row["username"];
                 $user_email = $row["user_email"];
-                $user_password = $row["user_password"];
-                
+                $user_password = $row["user_password"];                
             }
 }
 
-if(isset($_POST["update_user"])){
+
+
+if(isset($_POST["update_user"]) ){
     $user_firstname = $_POST["user_firstname"];
     $user_lastname = $_POST["user_lastname"];
     $user_role = $_POST["user_role"];
     $username = $_POST["username"];
     $user_email = $_POST["user_email"];
     $user_password = $_POST["user_password"];
+
+    $query = "SELECT randSalt FROM users";
+    $select_randSalt = mysqli_query($connection , $query);
+    confirmQuery($select_randSalt);
+
+    $row = mysqli_fetch_array($select_randSalt);
+    $salt = $row['randSalt'];
+
+    $hashed_password = crypt($user_password , $salt);   
+
     
     // $post_image = $_FILES["image"]["name"];
     // $post_image_temp = $_FILES["image"]["tmp_name"];
@@ -57,7 +68,7 @@ if(isset($_POST["update_user"])){
     $query .= "user_role = '{$user_role}', ";
     $query .= "username = '{$username}', ";
     $query .= "user_email = '{$user_email}', ";
-    $query .= "user_password = '{$user_password}' ";
+    $query .= "user_password = '{$hashed_password}' ";
     $query .= "WHERE userid = {$user_id}";
              
     $update_user_query = mysqli_query($connection, $query); 
@@ -69,7 +80,7 @@ if(isset($_POST["update_user"])){
 
 ?>
 
-<form action="" method="post" enctype="multipart/form-data">
+<form action="" method="post" enctype="multipart/form-data" autocomplete="off">
     <div class="form-group">
         <label for="firstname">Firstname</label>
         <input type="text" class="form-control" name="user_firstname" value="<?php echo $user_firstname; ?>">
@@ -114,7 +125,7 @@ if(isset($_POST["update_user"])){
     </div>
     <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" class="form-control" name="user_password" value="<?php echo $user_password; ?>">
+        <input type="password" class="form-control" name="user_password" value="">
     </div>
     <div class="form-group">
         <input class="btn btn-primary" type="submit" name="update_user" value="Update User">

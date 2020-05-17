@@ -11,6 +11,16 @@
         $username = $_POST["username"];
         $user_email = $_POST["user_email"];
         $user_password = $_POST["user_password"];
+
+        $query = "SELECT randSalt FROM users";
+        $select_randSalt = mysqli_query($connection , $query);
+        confirmQuery($select_randSalt);
+
+        $row = mysqli_fetch_array($select_randSalt);
+        $salt = $row['randSalt'];
+
+        $hashed_password = crypt($user_password , $salt);   
+
         
         // $post_image = $_FILES["image"]["name"];
         // $post_image_temp = $_FILES["image"]["tmp_name"];
@@ -44,12 +54,16 @@
         $query .= "user_role = '{$user_role}', ";
         $query .= "username = '{$username}', ";
         $query .= "user_email = '{$user_email}', ";
-        $query .= "user_password = '{$user_password}' ";
+        $query .= "user_password = '{$hashed_password}' ";
         $query .= "WHERE username = '{$username}'";
+
+
                  
         $update_user_query = mysqli_query($connection, $query); 
         //echo $query;
         confirmQuery($update_user_query);
+
+
     
     
     }
@@ -89,7 +103,7 @@
                     <small><?php echo $username;?></small>
                 </h1>
                 
-<form action="" method="post" enctype="multipart/form-data">
+<form action="" method="post" enctype="multipart/form-data" autocomplete="off">
     <div class="form-group">
         <label for="firstname">Firstname</label>
         <input type="text" class="form-control" name="user_firstname" value="<?php echo $user_firstname; ?>">

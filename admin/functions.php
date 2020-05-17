@@ -279,7 +279,7 @@ function deletePost(){
         
             if(isset($_GET['delete'])){
             $user_id = $_GET['delete'];
-            $query = "DELETE FROM users WHERE user_id = {$user_id} ";
+            $query = "DELETE FROM users WHERE userid = {$user_id} ";
             $delete_query = mysqli_query($connection,$query);
             confirmQuery($delete_query);
             header("Location: users.php");

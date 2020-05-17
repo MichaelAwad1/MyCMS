@@ -21,7 +21,7 @@
                 
                     <?php insert_categories();  ?>
         
-                    <form action="" method="post">
+                    <form action="" method="post" autocomplete="off">
                         <div class="form-group">
                              <label for="cat-title">Add Category</label>
                              <input type="text" class="form-control" name="cat_title">
@@ -71,7 +71,8 @@
                                         
                                     echo "<td>{$cat_id}</td>";
                                     echo "<td>{$cat_title}</td>";
-                                echo "<td><a href='categories.php?delete={$cat_id}'>Delete</a></td>";
+                                echo "<td><a onClick=\"javascript: return confirm('Are you sure you want to delete?'); \"
+                                href='categories.php?delete={$cat_id}'>Delete</a></td>";
                                 echo "<td><a href='categories.php?edit={$cat_id}'>Edit</a></td>";
                                     echo "</tr>";
 
