@@ -20,7 +20,12 @@
             <?php 
             if(isset($_GET['p_id'])){
               $post_id = $_GET['p_id'];
-            }
+              $query = "UPDATE POSTS SET post_view_count = post_view_count +1  WHERE post_id = {$post_id}";
+              $increment_post_view_count = mysqli_query($connection , $query);
+              confirmQuery($increment_post_view_count);
+
+
+            
                 $query = "SELECT * FROM POSTS WHERE post_id = {$post_id}";
                 $select_posts = mysqli_query($connection , $query);
                 
@@ -59,7 +64,13 @@
             
                 
                 
-           <?php }  ?>
+           <?php }}
+           
+           else {
+               header("Location: index.php");
+           }
+
+           ?>
 
 
 
